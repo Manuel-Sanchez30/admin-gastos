@@ -1,24 +1,29 @@
 <script setup>
+import { ref,reactive } from 'vue';
 
-import { ref } from 'vue';
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import Presupuesto from './components/Presupuesto.vue';
 import imgPlus from './assets/img/plus_10024172.png'
-
-
+import Modal from './components/Modal.vue'
 
 
 const presupuesto = ref(0)
 const disponible = ref(0)
+
+const modal = reactive({
+  mostrar:false
+})
 
 const definirPresupuesto = (cantidad)=>{
   presupuesto.value = cantidad
   disponible.value = cantidad
 }
 
-const modal = ()=>{
-  console.log('diste click');
+const mostrarModal = ()=>{
+  modal.mostrar = true
 }
+
+
 
 </script>
 
@@ -45,9 +50,12 @@ const modal = ()=>{
         <img 
           :src="imgPlus"
           alt="img-plus"
-          class="fixed w-8 cursor-pointer right-12 bottom-1"  
+          class="fixed w-8 cursor-pointer right-8 bottom-1"
+          @click="mostrarModal"  
         >
-        
+        <Modal
+          v-if="modal.mostrar"
+        />
       </div>
     </main>
     
