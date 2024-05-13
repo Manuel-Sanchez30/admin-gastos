@@ -1,6 +1,7 @@
 <script setup>
 
 import imgLogo from '../assets/vue.svg'
+import {formatearCantidad} from '../helpers'
 
 const props = defineProps({
     presupuesto:{
@@ -24,8 +25,8 @@ const props = defineProps({
             </div>
             <div class="flex flex-col items-center gap-4">
                 <div class="font-semibold">
-                    <p>Presupuesto: ${{ presupuesto }}</p>
-                    <p>Disponible: ${{ disponible }}</p>
+                    <p>Presupuesto: {{ formatearCantidad(presupuesto) }}</p>
+                    <p>Disponible: {{ formatearCantidad(disponible) }}</p>
                     <p>Gastado: $0</p>
                 </div>
                 <input 
