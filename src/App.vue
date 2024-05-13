@@ -7,8 +7,18 @@ import imgPlus from './assets/img/plus_10024172.png'
 import Modal from './components/Modal.vue'
 
 
-const presupuesto = ref(0)
-const disponible = ref(0)
+
+const presupuesto = ref(0);
+const disponible = ref(0);
+const gastos = ref([]);
+
+const gasto = reactive({
+  nombre:'',
+  cantidad:'',
+  categoria:'',
+  id:null,
+  fecha: Date.now()
+})
 
 const modal = reactive({
   mostrar:false
@@ -26,6 +36,13 @@ const mostrarModal = ()=>{
 const cerrarModal = ()=>{
   modal.mostrar = false;
   
+}
+
+const guardarGasto = ()=>{
+  gastos.value.push({
+    ...gasto,
+    id:123
+  })
 }
 
 
@@ -61,6 +78,11 @@ const cerrarModal = ()=>{
         <Modal
           v-if="modal.mostrar"
           @cerrar-modal="cerrarModal"
+          @guardar-gasto="guardarGasto"
+          v-model:nombre="gasto.nombre"
+          v-model:cantidad="gasto.cantidad"
+          v-model:categoria="gasto.categoria"
+
         />
       </div>
     </main>
