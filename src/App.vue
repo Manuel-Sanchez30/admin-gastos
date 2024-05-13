@@ -20,7 +20,12 @@ const definirPresupuesto = (cantidad)=>{
 }
 
 const mostrarModal = ()=>{
-  modal.mostrar = true
+  modal.mostrar = true;
+}
+
+const cerrarModal = ()=>{
+  modal.mostrar = false;
+  
 }
 
 
@@ -55,6 +60,7 @@ const mostrarModal = ()=>{
         >
         <Modal
           v-if="modal.mostrar"
+          @cerrar-modal="cerrarModal"
         />
       </div>
     </main>
