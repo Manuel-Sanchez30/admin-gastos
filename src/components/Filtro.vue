@@ -1,5 +1,9 @@
 <script setup>
 
+//sintaxis corta para recibir las props
+defineProps(['filtro'])
+defineEmits(['update:filtro'])
+
 </script>
 <template>
     <div>
@@ -11,8 +15,8 @@
             <select 
                     name="filtro"
                     id="filtro"
-                    :value="categoria"
-                    @input="$emit('update:categoria', $event.target.value)"
+                    :value="filtro"
+                    @input="$emit('update:filtro')"
                     class="rounded-md p-1 w-72 font-semibold text-gray-900"
             >
                 <option value="">--Seleccione--</option>
