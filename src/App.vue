@@ -157,7 +157,7 @@ const resetearApp = ()=>{
     :class="[modal.mostrar ? 'overflow-hidden max-h-screen' : '']"  
   >
     <header>
-      <h1 class="text-4xl text-center font-bold text-indigo-700 mt-8">Planificador de Gastos</h1>
+      <h1 class="text-4xl text-center font-bold text-indigo-600 mt-8">Planificador de Gastos</h1>
 
       <div>
         <Presupuesto

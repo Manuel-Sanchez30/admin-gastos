@@ -1,7 +1,8 @@
 <script setup>
-
-import imgLogo from '../assets/vue.svg'
+import CircleProgress from 'vue3-circle-progress'
+import 'vue3-circle-progress/dist/circle-progress.css'    
 import {formatearCantidad} from '../helpers'
+import { computed } from 'vue';
 
 defineEmits(['resetear-app'])
 
@@ -20,14 +21,27 @@ const props = defineProps({
     }
 })
 
+const porcentaje = computed(()=>{    
+    return parseInt( ((props.presupuesto - props.disponible) / props.presupuesto) * 100 )
+});
+
 </script>
 
 <template>
     <div class="flex flex-col items-center mt-10 gap-5 ">        
 
         <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-10">
-            <div>
-                <img :src="imgLogo" alt="">
+            <div class="relative">
+                <p class="absolute m-auto left-0 right-0 text-center z-10 text-xl font-bold text-indigo-600 top-1/3">{{ porcentaje }}%</p>
+
+                <CircleProgress
+                    :percent="porcentaje"
+                    :size="100"
+                    :border-width="15"
+                    :border-bg-width="15"
+                    fill-color="#4F46E5"
+                    empty-color="#e1e1e1"
+                />
             </div>
             <div class="flex flex-col items-center gap-4">
                 <div class="font-semibold">
