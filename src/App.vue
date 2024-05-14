@@ -143,11 +143,8 @@ const resetearApp = ()=>{
   if(confirm('Deseas Resetear Presupuesto y Gastos?')){
     gastos.value = []
     presupuesto.value = 0
-  }
-  
-}
-
-
+  }  
+};
 
 </script>
 
