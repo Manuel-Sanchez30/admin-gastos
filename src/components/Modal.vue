@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue';
+    import { ref, computed } from 'vue';
     import Alerta from './Alerta.vue';
 
     import imgClose from '../assets/img/close_10238407 (1).png'
@@ -22,13 +22,23 @@
         disponible:{
             type:Number,
             required:true
+        },
+        id:{
+            type:[String, null],
+            required:true
         }
+    })
+
+    const cambiarText = computed(()=>{
+        return props.id
     })
 
     const emit = defineEmits(['cerrar-modal','guardar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
 
+    const old = props.cantidad
+
     const agregarGasto = ()=>{
-        const {nombre,cantidad,categoria, disponible} = props
+        const {nombre,cantidad,categoria, disponible, id} = props
 
         if([nombre,cantidad,categoria].includes('')){
             error.value = 'Todos los campos son obligatorios'
@@ -40,15 +50,27 @@
             return
         }
 
-        if(cantidad <= 0){
-            error.value = 'Cantidad no Valida!'
+        if(id){
+            if(cantidad > old + disponible){
+                error.value = 'Haz excedido el presupuesto'
+                setTimeout(()=>{
+                    
+                },3000)
+            
+                return
+            }
+        }else{
+            if(cantidad <= 0){
+                error.value = 'Cantidad no Valida!'
 
-            setTimeout(()=>{
-                error.value = ''
-            },3000)
+                setTimeout(()=>{
+                    error.value = ''
+                },3000)
 
-            return
+                return
+            }
         }
+        
 
         if(cantidad > disponible){
             error.value = 'Excediste el valor Disponible'
@@ -65,7 +87,7 @@
 </script>
 
 <template>
-    <div class="absolute top-0 right-0 left-0 bottom-0 bg-slate-950/80 text-">
+    <div class="absolute top-0 right-0 left-0 bottom-0 bg-slate-950/80 flex flex-col justify-center items-center">
         <div>
             <img 
                 :src="imgClose"
@@ -75,10 +97,12 @@
             >
         </div>
         <form 
-            class="flex flex-col items-center mt-32 mr-auto mb-0 ml-auto w-11/12"
+            class="flex flex-col items-center mr-auto mb-0 ml-auto w-11/12"
             @submit.prevent="agregarGasto"    
         >
-            <legend class="text-2xl font-semibold mb-6">Añadir Gasto</legend>
+            <legend 
+                class="text-2xl font-semibold mb-6"
+            >{{ cambiarText ? 'Guardar Cambios' : 'Añadir Gasto' }}</legend>
             <Alerta v-if="error">
                 {{ error }}
             </Alerta>
@@ -125,10 +149,17 @@
             </div>
             <input 
                 type="submit"
-                value="Añadir Gasto"
+                :value="[cambiarText ? 'Guardar Cambios' : 'Añadir Gasto']"
                 class="bg-indigo-600 w-72 rounded-md font-semibold cursor-pointer hover:bg-indigo-700 transition-colors"    
             >
         </form>
+        <button 
+            type="button"
+            v-if="cambiarText"
+            class="bg-rose-600 rounded-md w-72 mt-8 font-semibold cursor-pointer hover:bg-rose-700 transition-colors "
+        >
+            Eliminar Gasto
+        </button>
     </div>
 </template>
 

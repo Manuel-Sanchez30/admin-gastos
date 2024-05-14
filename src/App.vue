@@ -37,7 +37,16 @@ watch(gastos,()=>{
   disponible.value = presupuesto.value - totalGastado
 },{
   deep:true,
-})
+});
+
+watch(modal,()=>{
+  if(!modal.mostrar){
+    reiniciarStateGasto()
+  }
+},
+{
+  deep:true,
+});
 
 const mostrarModal = ()=>{
   modal.mostrar = true;
@@ -49,13 +58,26 @@ const cerrarModal = ()=>{
 }
 
 const guardarGasto = ()=>{
-  gastos.value.push({
-    ...gasto,
-    id:generarId()
-  })
+  //evitar resgistros duplicados
+  if(gasto.id){
+    const {id} = gasto
+    const index = gastos.value.findIndex(gasto => gasto.id === id)
+    gastos.value[index] = {...gasto}
+
+  }else{
+      gastos.value.push({
+      ...gasto,
+      id:generarId()
+    })
+  }  
 
   cerrarModal()
 
+  reiniciarStateGasto()
+
+}
+//reiniciar state de Gasto
+const reiniciarStateGasto = ()=>{
   Object.assign(gasto,{
     nombre:'',
     cantidad:'',
@@ -63,7 +85,13 @@ const guardarGasto = ()=>{
     id:null,
     fecha: Date.now()
   })
+}
 
+//editar Gasto
+const seleccionarGasto = (id)=>{
+  const gastoEditar = gastos.value.filter(gasto => gasto.id === id)[0]
+  Object.assign(gasto,gastoEditar)
+  mostrarModal()
 }
 
 
@@ -101,6 +129,7 @@ const guardarGasto = ()=>{
         v-for="gasto in gastos"
         :key="gasto.id"
         :gasto="gasto"
+        @seleccionar-gasto="seleccionarGasto"
       />
       </div>
       
@@ -115,6 +144,7 @@ const guardarGasto = ()=>{
         <Modal
           v-if="modal.mostrar"
           :disponible="disponible"
+          :id="gasto.id"
           @cerrar-modal="cerrarModal"
           @guardar-gasto="guardarGasto"
           v-model:nombre="gasto.nombre"

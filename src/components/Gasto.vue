@@ -16,6 +16,8 @@ const props = defineProps({
     }
 })
 
+defineEmits(['seleccionar-gasto'])
+
 //diccionario para renderizar los iconos segun la categoria
 const diccionarioIconos = {
     ahorro:IconoAhorro,
@@ -41,7 +43,10 @@ const diccionarioIconos = {
             </div>
             <div>
                 <p class="uppercase font-semibold text-indigo-600">{{ gasto.categoria }}</p>
-                <p class="cursor-pointer hover:font-semibold">{{ gasto.nombre }}</p>
+                <p 
+                    class="cursor-pointer hover:font-semibold"
+                    @click="$emit('seleccionar-gasto', gasto.id)"    
+                >{{ gasto.nombre }}</p>
                 <p>{{ formatearFecha(gasto.fecha) }}</p>
             </div>
         </div>
