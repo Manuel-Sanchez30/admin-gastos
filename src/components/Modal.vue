@@ -33,7 +33,7 @@
         return props.id
     })
 
-    const emit = defineEmits(['cerrar-modal','guardar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
+    const emit = defineEmits(['cerrar-modal','guardar-gasto','eliminar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
 
     const old = props.cantidad
 
@@ -156,12 +156,17 @@
         <button 
             type="button"
             v-if="cambiarText"
+            @click="$emit('eliminar-gasto')"
             class="bg-rose-600 rounded-md w-72 mt-8 font-semibold cursor-pointer hover:bg-rose-700 transition-colors "
         >
             Eliminar Gasto
         </button>
     </div>
+
+
 </template>
+
+
 
 
 

@@ -1,5 +1,6 @@
 <script setup>
 import { ref,reactive, watch } from 'vue';
+import Swal from 'sweetalert2'
 
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import Presupuesto from './components/Presupuesto.vue';
@@ -94,6 +95,16 @@ const seleccionarGasto = (id)=>{
   mostrarModal()
 }
 
+//eliminar gasto
+const eliminarGasto = ()=>{
+  
+  if(confirm('Eliminar Gasto?')){
+    gastos.value = gastos.value.filter(gastoState => gastoState.id !== gasto.id)
+    cerrarModal()
+  }
+    
+}
+
 
 
 </script>
@@ -147,6 +158,7 @@ const seleccionarGasto = (id)=>{
           :id="gasto.id"
           @cerrar-modal="cerrarModal"
           @guardar-gasto="guardarGasto"
+          @eliminar-gasto="eliminarGasto"
           v-model:nombre="gasto.nombre"
           v-model:cantidad="gasto.cantidad"
           v-model:categoria="gasto.categoria"
