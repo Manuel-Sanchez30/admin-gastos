@@ -32,7 +32,7 @@ const porcentaje = computed(()=>{
 
         <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-10">
             <div class="relative">
-                <p class="absolute m-auto left-0 right-0 text-center z-10 text-xl font-bold text-indigo-600 top-1/3">{{ porcentaje }}%</p>
+                <p class="absolute m-auto left-0 right-0 text-center z-10 text-xl font-bold text-white top-1/3">{{ porcentaje }}%</p>
 
                 <CircleProgress
                     :percent="porcentaje"
