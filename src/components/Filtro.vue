@@ -13,10 +13,10 @@ defineEmits(['update:filtro'])
                 class="font-semibold mb-2 sm:text-2xl sm:mt-4"    
             >Filtrar Gastos</label>
             <select 
-                    name="filtro"
+                    name="categoria"
                     id="filtro"
                     :value="filtro"
-                    @input="$emit('update:filtro')"
+                    @input="$emit('update:filtro', $event.target.value)"
                     class="rounded-md p-1 w-72 font-semibold text-gray-900"
             >
                 <option value="">--Seleccione--</option>

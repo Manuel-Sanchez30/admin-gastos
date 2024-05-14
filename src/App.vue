@@ -110,7 +110,7 @@ const eliminarGasto = ()=>{
 //filtrar gastos
 const gastosFiltrados = computed(()=>{
   if(filtro.value){
-    gastos.value.filter(gasto => gasto.categoria === filtro.value)
+    return gastos.value.filter(gasto => gasto.categoria === filtro.value)
   }
   return gastos.value
 })
@@ -151,7 +151,7 @@ const gastosFiltrados = computed(()=>{
         <h2 
           class="mt-5 text-center font-semibold text-2xl"
         >
-          {{ gastosFiltrados > 0 ? 'Gastos' : 'No hay Gastos' }}
+          {{ gastosFiltrados.length > 0 ? 'Gastos' : 'No hay Gastos' }}
         </h2>
 
       <Gasto
