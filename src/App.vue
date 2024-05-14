@@ -1,5 +1,5 @@
 <script setup>
-import { ref,reactive, watch, computed } from 'vue';
+import { ref,reactive, watch, computed, onMounted } from 'vue';
 
 
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
@@ -38,6 +38,9 @@ watch(gastos,()=>{
   const totalGastado = gastos.value.reduce((total,gasto) => gasto.cantidad + total, 0)
   gastado.value = totalGastado
   disponible.value = presupuesto.value - totalGastado
+
+  localStorage.setItem('gastos', JSON.stringify(gastos.value))
+
 },{
   deep:true,
 });
@@ -50,6 +53,26 @@ watch(modal,()=>{
 {
   deep:true,
 });
+
+//localStorage
+watch(presupuesto, ()=>{
+  localStorage.setItem('presupuesto', presupuesto.value)
+})
+
+//guardar en LocalStorage
+onMounted(()=>{
+  const prespuestoStorage = localStorage.getItem('presupuesto')
+  if(prespuestoStorage){
+    presupuesto.value = Number(prespuestoStorage)
+    disponible.value = Number(prespuestoStorage)
+  }
+
+  const gastosStorage = localStorage.getItem('gastos')
+  if(gastosStorage){
+    gastos.value = JSON.parse(gastosStorage)
+  }
+
+})
 
 const mostrarModal = ()=>{
   modal.mostrar = true;
@@ -115,6 +138,15 @@ const gastosFiltrados = computed(()=>{
   return gastos.value
 })
 
+//resetearApp
+const resetearApp = ()=>{
+  if(confirm('Deseas Resetear Presupuesto y Gastos?')){
+    gastos.value = []
+    presupuesto.value = 0
+  }
+  
+}
+
 
 
 </script>
@@ -125,7 +157,7 @@ const gastosFiltrados = computed(()=>{
     :class="[modal.mostrar ? 'overflow-hidden max-h-screen' : '']"  
   >
     <header>
-      <h1 class="text-4xl text-center font-bold text-indigo-700 mt-8">Planificador de Gastos</h1>
+      <h1 class="text-4xl text-center font-bold text-indigo-600 mt-8">Planificador de Gastos</h1>
 
       <div>
         <Presupuesto
@@ -137,6 +169,7 @@ const gastosFiltrados = computed(()=>{
           :presupuesto="presupuesto"
           :disponible="disponible"
           :gastado="gastado"
+          @resetear-app="resetearApp"
         />
 
       </div>
