@@ -1,6 +1,6 @@
 <script setup>
 import { ref,reactive, watch } from 'vue';
-import Swal from 'sweetalert2'
+
 
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import Presupuesto from './components/Presupuesto.vue';
@@ -8,6 +8,7 @@ import Modal from './components/Modal.vue'
 import Gasto from './components/Gasto.vue'
 import { generarId } from './helpers';
 import imgPlus from './assets/img/plus_10024172.png'
+import Filtro from './components/Filtro.vue';
 
 
 const presupuesto = ref(0);
@@ -132,6 +133,10 @@ const eliminarGasto = ()=>{
       </div>
     </header>
     <main v-if="presupuesto > 0">
+
+      <Filtro
+      
+      />
 
       <div>
         <h2 class="mt-5 text-center font-semibold text-2xl">{{ gastos.length > 0 ? 'Gastos' : 'No hay Gastos' }}</h2>
