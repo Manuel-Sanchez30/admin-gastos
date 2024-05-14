@@ -138,6 +138,15 @@ const gastosFiltrados = computed(()=>{
   return gastos.value
 })
 
+//resetearApp
+const resetearApp = ()=>{
+  if(confirm('Deseas Resetear Presupuesto y Gastos?')){
+    gastos.value = []
+    presupuesto.value = 0
+  }
+  
+}
+
 
 
 </script>
@@ -160,6 +169,7 @@ const gastosFiltrados = computed(()=>{
           :presupuesto="presupuesto"
           :disponible="disponible"
           :gastado="gastado"
+          @resetear-app="resetearApp"
         />
 
       </div>

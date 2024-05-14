@@ -3,6 +3,8 @@
 import imgLogo from '../assets/vue.svg'
 import {formatearCantidad} from '../helpers'
 
+defineEmits(['resetear-app'])
+
 const props = defineProps({
     presupuesto:{
         type:Number,
@@ -33,11 +35,14 @@ const props = defineProps({
                     <p>Disponible: {{ formatearCantidad(disponible) }}</p>
                     <p>Gastado: {{ formatearCantidad(gastado) }}</p>
                 </div>
-                <input 
-                    type="button"
-                    value="Resetear App"
-                    class="bg-rose-600 w-40 rounded-md font-semibold cursor-pointer hover:bg-rose-700 transition-colors"    
-                > 
+                <button
+                    @click="$emit('resetear-app')"
+                    class="bg-rose-600 w-40 rounded-md font-semibold cursor-pointer hover:bg-rose-700 transition-colors"
+                >
+                    Resetear App
+                    
+                </button> 
+                
             </div>
             
         </div>
