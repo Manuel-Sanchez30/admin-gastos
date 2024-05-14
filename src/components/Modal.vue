@@ -40,6 +40,7 @@
     const agregarGasto = ()=>{
         const {nombre,cantidad,categoria, disponible, id} = props
 
+        //validar que todos los campos sean obligatorios
         if([nombre,cantidad,categoria].includes('')){
             error.value = 'Todos los campos son obligatorios'
 
@@ -51,6 +52,7 @@
         }
 
         if(id){
+            //validar cantidad no exceda el disponible
             if(cantidad > old + disponible){
                 error.value = 'Haz excedido el presupuesto'
                 setTimeout(()=>{
@@ -60,6 +62,7 @@
                 return
             }
         }else{
+            //validar qu la cantidad no sea menor a cero
             if(cantidad <= 0){
                 error.value = 'Cantidad no Valida!'
 
