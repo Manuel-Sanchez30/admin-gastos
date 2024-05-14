@@ -18,13 +18,17 @@
         categoria:{
             type:String,
             required:true,
+        },
+        disponible:{
+            type:Number,
+            required:true
         }
     })
 
     const emit = defineEmits(['cerrar-modal','guardar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
 
     const agregarGasto = ()=>{
-        const {nombre,cantidad,categoria} = props
+        const {nombre,cantidad,categoria, disponible} = props
 
         if([nombre,cantidad,categoria].includes('')){
             error.value = 'Todos los campos son obligatorios'
@@ -39,6 +43,15 @@
         if(cantidad <= 0){
             error.value = 'Cantidad no Valida!'
 
+            setTimeout(()=>{
+                error.value = ''
+            },3000)
+
+            return
+        }
+
+        if(cantidad > disponible){
+            error.value = 'Excediste el valor Disponible'
             setTimeout(()=>{
                 error.value = ''
             },3000)
@@ -86,7 +99,7 @@
                     type="number"
                     id="cantidad"
                     :value="cantidad"
-                    @input="$emit('update:cantidad', $event.target.value)"
+                    @input="$emit('update:cantidad', +$event.target.value)"
                     placeholder="Ingresa la Cantidad"
                     class="rounded-md p-1 w-72 font-semibold text-gray-900"
                 >
